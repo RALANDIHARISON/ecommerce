@@ -1,1 +1,1 @@
-web: PYTHON=. gunicorn ecommerce.wsgi --log-file -
+web: PYTHONPATH=. gunicorn ecommerce.wsgi --log-file -
