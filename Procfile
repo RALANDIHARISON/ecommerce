@@ -1,2 +1,3 @@
-release: cd ecommerce && python manage.py migrate && python manage.py collectstatic --noinput
-web: gunicorn ecommerce.wsgi --chdir ecommerce
+web: gunicorn ecommerce.wsgi --chdir ecommerce --log-file -
+release: python manage.py migrate
+
