@@ -1,3 +1,4 @@
 web: gunicorn ecommerce.wsgi --chdir ecommerce --log-file -
-release: python manage.py migrate --chdir ecommerce
+release: sh -c "cd ecommerce && python manage.py migrate"
+
 
