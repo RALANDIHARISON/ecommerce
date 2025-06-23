@@ -1,2 +1,2 @@
-release: cd ecommerce && python manage.py migrate --noinput --settings=ecommerce.settings && python manage.py collectstatic --noinput --settings=ecommerce.settings
-web: gunicorn ecommerce.wsgi --chdir ecommerce --log-file - --bind 0.0.0.0:$PORT
+release: PYTHONPATH=$PYTHONPATH:ecommerce python ecommerce/manage.py migrate --noinput && PYTHONPATH=$PYTHONPATH:ecommerce python ecommerce/manage.py collectstatic --noinput
+web: python ecommerce/manage.py runserver 0.0.0.0:$PORT
