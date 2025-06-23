@@ -1,0 +1,102 @@
+{% extends 'store/main.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Dettagli Ordine #{{ order.id }}</h1>
+            <hr>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    Informazioni Ordine
+                </div>
+                <div class="card-body">
+                    <p><strong>ID Transazione:</strong> {{ order.transaction_id|default:"N/A" }}</p>
+                    <p><strong>Data Ordine:</strong> {{ order.date_ordered|date:"d M Y H:i" }}</p>
+                    <p><strong>Completo:</strong> {{ order.complete|yesno:"Sì,No" }}</p>
+                    <p><strong>Totale Carrello:</strong> ${{ order.get_cart_total|floatformat:2 }}</p>
+                    <p><strong>Articoli Carrello:</strong> {{ order.get_cart_items }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    Cliente
+                </div>
+                <div class="card-body">
+                    {% if order.customer %}
+                        <p><strong>Nome:</strong> {{ order.customer.name|default:"N/A" }}</p>
+                        <p><strong>Email:</strong> {{ order.customer.email|default:"N/A" }}</p>
+                        {% if order.customer.user %}
+                            <p><strong>Utente Registrato:</strong> {{ order.customer.user.username }}</p>
+                        {% else %}
+                            <p>Questo ordine è stato effettuato come ospite.</p>
+                        {% endif %}
+                    {% else %}
+                        <p>Informazioni cliente non disponibili.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if order.shipping %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Indirizzi di Spedizione
+                    </div>
+                    <div class="card-body">
+
+                        {% for shipping_address in shipping_addresses %}
+                            <p><strong>Indirizzo:</strong> {{ shipping_address.address }}</p>
+                            <p><strong>Città:</strong> {{ shipping_address.city }}</p>
+                            <p><strong>Stato:</strong> {{ shipping_address.state }}</p>
+                            <p><strong>CAP:</strong> {{ shipping_address.zipcode }}</p>
+                            <small>Aggiunto il: {{ shipping_address.date_added|date:"d M Y H:i" }}</small>
+                            {% if not forloop.last %}<hr>{% endif %}
+                        {% empty %}
+                            <p>Nessun indirizzo di spedizione associato a questo ordine.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    Articoli dell'Ordine
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Prodotto</th>
+                                <th>Prezzo</th>
+                                <th>Quantità</th>
+                                <th>Totale Articolo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order_items %}
+                            <tr>
+                                <td>
+                                    {% if item.product %}
+                                        {{ item.product.name }}
+                                    {% else %}
+                                        Prodotto non disponibile
+                                    {% endif %}
+                                </td>
+                                <td>${{ item.product.price|floatformat:2 }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ item.get_total|floatformat:2 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4">Nessun articolo in questo ordine.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">Torna agli Ordini</a>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,73 @@
+{% extends 'store/main.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Gestione Ordini</h1>
+            <p>Benvenuto nella sezione di gestione ordini, {{ user.username }}!</p>
+            <hr>
+            <h3>Elenco Ordini</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID Ordine</th>
+                        <th>Cliente</th>
+                        <th>Data Ordine</th>
+                        <th>Completo</th>
+                        <th>Totale Carrello</th>
+                        <th>Articoli</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>
+                            {% if order.customer %}
+                                {% if order.customer.user %}
+
+                                    {{ order.customer.user.username }} (<a href="mailto:{{ order.customer.email }}">{{ order.customer.email }}</a>)
+                                {% else %}
+
+                                    {{ order.customer.name|default:"Ospite" }} ({{ order.customer.email }})
+                                {% endif %}
+                            {% else %}
+
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td>{{ order.date_ordered|date:"d M Y H:i" }}</td>
+                        <td>{{ order.complete|yesno:"Sì,No" }}</td>
+                        <td>${{ order.get_cart_total|floatformat:2 }}</td>
+                        <td>{{ order.get_cart_items }}</td>
+                        <td>
+                            <a href="{% url 'orders:order_detail' order.id %}" class="btn btn-sm btn-info">Dettagli</a>
+
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">Nessun ordine trovato.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+            {% if is_paginated %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Precedente</a></li>
+                        {% endif %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Successiva</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
