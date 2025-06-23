@@ -15,7 +15,7 @@ env.bak/
 *.log
 *.pot
 *.mo
-*.sqlite3
+
 media/
 
 .idea/
