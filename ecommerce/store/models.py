@@ -24,7 +24,7 @@ class Product(models.Model):
 	@property
 	def imageURL(self):
 		try:
-			url = self.image.url
+			url = url = '/static/images/' + str(self.image).split('/')[-1]
 		except Exception:
 			url = ''
 		return url
