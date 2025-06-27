@@ -16,6 +16,8 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+CSRF_TRUSTED_ORIGINS = ["https://ecommerce-production-7f88.up.railway.app/"]
+
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
