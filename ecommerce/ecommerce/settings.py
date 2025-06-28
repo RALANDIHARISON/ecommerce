@@ -10,19 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
-
 from pathlib import Path
 from decouple import config
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CSRF_TRUSTED_ORIGINS = ["https://ecommerce-production-7f88.up.railway.app/"]
-
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommerce-production-8787.up.railway.app', '.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommerce-production-8787.up.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -65,27 +62,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
-#DATABASES = {
- #   'default': dj_database_url.config(
-      #  default=config('DATABASE_URL'),
- #       conn_max_age=600,
-      #  ssl_require=True
-   # )
-#}
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': os.getenv('PGPASSWORD'),
-        'HOST': 'postgres.railway.internal',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require',
-
-        }
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
