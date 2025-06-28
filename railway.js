@@ -1,11 +1,9 @@
 {
   "build": {
-    "command": "pip install -r requirements.txt && cd ecommerce && python manage.py collectstatic --noinput",
-    "base": "/app",
-    "watchPatterns": ["**/*.py", "**/requirements.txt"]
+    "command": "pip install -r requirements.txt",
+    "base": "/app/ecommerce"
   },
   "deploy": {
-    "startCommand": "cd ecommerce && gunicorn ecommerce.wsgi --bind 0.0.0.0:$PORT",
-    "healthcheckPath": "/"
+    "startCommand": "gunicorn ecommerce.wsgi --bind 0.0.0.0:$PORT"
   }
 }
