@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+import ssl
 from pathlib import Path
 from decouple import config
 import dj_database_url
@@ -67,7 +68,8 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL'),
-        conn_max_age=600
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
