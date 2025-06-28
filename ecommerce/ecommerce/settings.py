@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
-import ssl
+
 from pathlib import Path
 from decouple import config
 import dj_database_url
@@ -65,12 +65,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
+#DATABASES = {
+ #   'default': dj_database_url.config(
+      #  default=config('DATABASE_URL'),
+ #       conn_max_age=600,
+      #  ssl_require=True
+   # )
+#}
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': os.getenv('PGPASSWORD'),
+        'HOST': 'postgres.railway.internal',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+
+        }
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
