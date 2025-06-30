@@ -6,6 +6,7 @@
   },
   "deploy": {
     "startCommand": "cd ecommerce && gunicorn ecommerce.wsgi --bind 0.0.0.0:$PORT",
-    "healthcheckPath": "/"
+    "healthcheckPath": "/",
+    "releaseCommand": "cd ecommerce && python manage.py migrate --no-input"
   }
 }
