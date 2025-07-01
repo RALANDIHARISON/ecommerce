@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommerce-production-8787.up.railway.app', '.railway.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommerce-production-7f88.up.railway.app', '.railway.app']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
