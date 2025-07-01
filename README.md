@@ -35,8 +35,8 @@ Segui questi passaggi per configurare ed eseguire il progetto sul tuo ambiente l
 
 1.  **Clona il Repository:**
     ```bash
-    git clone [https://github.com/RALANDIHARISON/ecommerce.git]
-    cd <ecommerce>
+    git clone https://github.com/RALANDIHARISON/ecommerce.git
+    
     ```
 
 2.  **Crea e Attiva un Ambiente Virtuale :**
@@ -88,8 +88,4 @@ Segui questi passaggi per configurare ed eseguire il progetto sul tuo ambiente l
 
 **Il progetto è deployato e accessibile qui:**
 
-**[]**
-
----
-
-Ora puoi usare il comando `New-Item README.md -ItemType File` (o `ni README.md`) in PowerShell, poi aprire il file appena creato nel tuo editor e incollare questo contenuto, salvandolo.
+**[https://ecommerce-production-7f88.up.railway.app/]**
