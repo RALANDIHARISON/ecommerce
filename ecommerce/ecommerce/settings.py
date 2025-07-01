@@ -20,6 +20,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'ecommerce-production-7f88.up.railway.app', '.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    "https://ecommerce-production-7f88.up.railway.app","http://127.0.0.1:8000",]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
